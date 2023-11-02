@@ -5,32 +5,35 @@
 #ifndef PROYECTOFINAL_PROGRAMACION_III_HASHENTRY_H
 #define PROYECTOFINAL_PROGRAMACION_III_HASHENTRY_H
 
-
 template <class K, class T>
-class HashEntry
-{
+class HashEntry {
 private:
     K clave;
     T valor;
-public:
-    HashEntry(K c, T v){
-        clave = c;
-        valor = v;
-    }
+    HashEntry<K, T> *next;  // Puntero al siguiente HashEntry en caso de colisión
 
-    K getClave(){
+public:
+    HashEntry(K c, T v) : clave(c), valor(v), next(nullptr) {}
+
+    K getClave() {
         return clave;
     }
-    void setClave(K c){
-        clave = c;
-    }
 
-    T getValor(){
+    T getValor() {
         return valor;
     }
-    void setValor(T v){
-        valor = v;
+
+    HashEntry<K, T>* getNext() {
+        return next;
+    }
+
+    void setNext(HashEntry<K, T>* siguiente) {
+        next = siguiente;
+    }
+    void setValor(const T& nuevoValor) {
+        valor = nuevoValor;
     }
 };
+
 
 #endif //PROYECTOFINAL_PROGRAMACION_III_HASHENTRY_H

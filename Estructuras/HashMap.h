@@ -1,149 +1,120 @@
-//
-// Created by virrr on 10/27/2023.
-//
 #ifndef PROYECTOFINAL_PROGRAMACION_III_HASHMAP_H
 #define PROYECTOFINAL_PROGRAMACION_III_HASHMAP_H
 
 #include "HashEntry.h"
 #include <iostream>
+#include <stdexcept>
+#include <functional>
 
 template <class K, class T>
-class HashMap
-{
+class HashMap {
 private:
     HashEntry<K, T> **tabla;
     unsigned int tamanio;
-
-    static unsigned int hashFunc(K clave);
-
-    unsigned int (*hashFuncP)(K clave);
+    std::function<unsigned int(const K&)> hashFunc;
 
 public:
-    explicit HashMap(unsigned int k);
+    unsigned int hashFuncionParaStrings(const std::string &clave) {
+        unsigned int hash = 0;
+        for (char c : clave) {
+            hash = hash * 101 + c;
+        }
+        return hash;
+    }
 
-    HashMap(unsigned int k, unsigned int (*hashFuncP)(K clave));
+    explicit HashMap(unsigned int tamanio) : tamanio(tamanio), tabla(new HashEntry<K, T>*[tamanio]()), hashFunc(hashFuncionParaStrings) {
+        for (unsigned int i = 0; i < tamanio; ++i) {
+            tabla[i] = nullptr;
+        }
+    }
 
-    T get(K clave);
+    HashMap(unsigned int tamanio, std::function<unsigned int(const K&)> func) : tamanio(tamanio), hashFunc(func), tabla(new HashEntry<K, T>*[tamanio]()) {
+        for (unsigned int i = 0; i < tamanio; ++i) {
+            tabla[i] = nullptr;
+        }
+    }
 
-    void put(K clave, T valor);
+    T get(const K& clave) {
+        unsigned int pos = hashFunc(clave) % tamanio;
+        HashEntry<K, T> *entry = tabla[pos];
+        while (entry != nullptr) {
+            if (entry->getClave() == clave) {
+                return entry->getValor();
+            }
+            entry = entry->getNext();
+        }
+        throw std::runtime_error("Clave no encontrada");
+    }
 
-    void remove(K clave);
+    void put(const K& clave, const T& valor) {
+        unsigned int pos = hashFunc(clave) % tamanio;
+        HashEntry<K, T> *prevEntry = nullptr;
+        HashEntry<K, T> *entry = tabla[pos];
+        while (entry != nullptr && entry->getClave() != clave) {
+            prevEntry = entry;
+            entry = entry->getNext();
+        }
+        if (entry == nullptr) {
+            entry = new HashEntry<K, T>(clave, valor);
+            if (prevEntry == nullptr) {
+                tabla[pos] = entry;
+            } else {
+                prevEntry->setNext(entry);
+            }
+        } else {
+            entry->setValor(valor);
+        }
+    }
 
-    ~HashMap();
+    void remove(const K& clave) {
+        unsigned int pos = hashFunc(clave) % tamanio;
+        HashEntry<K, T> *prevEntry = nullptr;
+        HashEntry<K, T> *entry = tabla[pos];
+        while (entry != nullptr && entry->getClave() != clave) {
+            prevEntry = entry;
+            entry = entry->getNext();
+        }
+        if (entry == nullptr) {
+            throw std::runtime_error("Clave no encontrada para eliminar");
+        } else {
+            if (prevEntry == nullptr) {
+                tabla[pos] = entry->getNext();
+            } else {
+                prevEntry->setNext(entry->getNext());
+            }
+            delete entry;
+        }
+    }
 
-    bool esVacio();
+    ~HashMap() {
+        for (unsigned int i = 0; i < tamanio; ++i) {
+            HashEntry<K, T> *entry = tabla[i];
+            while (entry != nullptr) {
+                HashEntry<K, T> *prev = entry;
+                entry = entry->getNext();
+                delete prev;
+            }
+        }
+        delete[] tabla;
+    }
 
-    void print();
+    bool esVacio() {
+        for (unsigned int i = 0; i < tamanio; ++i) {
+            if (tabla[i] != nullptr) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
 };
 
-template <class K, class T>
-HashMap<K, T>::HashMap(unsigned int k)
-{
-    tamanio = k;
-    tabla = new HashEntry<K, T> *[tamanio];
-    for (int i = 0; i < tamanio; i++)
-    {
-        tabla[i] = NULL;
+unsigned int hashFuncionParaStrings(const std::string &clave) {
+    unsigned int hash = 0;
+    for (char c : clave) {
+        hash = hash * 101 + c;
     }
-    hashFuncP = hashFunc;
+    return hash;
 }
-
-template <class K, class T>
-HashMap<K, T>::HashMap(unsigned int k, unsigned int (*fp)(K))
-{
-    tamanio = k;
-    tabla = new HashEntry<K, T> *[tamanio];
-    for (int i = 0; i < tamanio; i++)
-    {
-        tabla[i] = NULL;
-    }
-    hashFuncP = fp;
-}
-
-template <class K, class T>
-HashMap<K, T>::~HashMap()
-{
-    for (int i = 0; i < tamanio; i++)
-    {
-        if (tabla[i] != NULL)
-        {
-            delete tabla[i];
-        }
-    }
-}
-
-template <class K, class T>
-T HashMap<K, T>::get(K clave)
-{
-    unsigned int pos = hashFuncP(clave) % tamanio;
-    if (tabla[pos] == NULL)
-    {
-        throw 404;
-    }
-    if(tabla[pos]->getClave() == clave){
-        return tabla[pos]->getValor();
-    }else{
-        throw 409;
-    }
-}
-
-template <class K, class T>
-void HashMap<K, T>::put(K clave, T valor)
-{
-    unsigned int pos = hashFuncP(clave) % tamanio;
-
-    if (tabla[pos] != NULL)
-    {
-        //Manejar la Colision!!!!!!!
-        throw 409;
-    }
-
-    tabla[pos] = new HashEntry<K, T>(clave, valor); //Corresponde a una fila en la tabla HASH
-}
-
-template <class K, class T>
-void HashMap<K, T>::remove(K clave) {}
-
-template <class K, class T>
-bool HashMap<K, T>::esVacio()
-{
-    for (int i = 0; i < tamanio; i++)
-    {
-        if (tabla[i] != NULL)
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
-template <class K, class T>
-unsigned int HashMap<K, T>::hashFunc(K clave)
-{
-    return (unsigned int)clave;
-}
-
-template <class K, class T>
-void HashMap<K, T>::print()
-{
-
-    std::cout << "i"
-              << " "
-              << "Clave"
-              << "\t\t"
-              << "Valor" << std::endl;
-    std::cout << "--------------------" << std::endl;
-    for (int i = 0; i < tamanio; i++)
-    {
-        std::cout << i << " ";
-        if (tabla[i] != NULL)
-        {
-            std::cout << tabla[i]->getClave() << "\t\t";
-            std::cout << tabla[i]->getValor();
-        }
-        std::cout << std::endl;
-    }
-}
-
 
 #endif //PROYECTOFINAL_PROGRAMACION_III_HASHMAP_H
