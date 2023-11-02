@@ -1,0 +1,8 @@
+Necesito que actues como un exxperto en c++ patrones de diseno y en explicar las cosas. Teniendo en cuneta tu respuesta anterior quiero que empieces a trabajar en una solucion usando un modelo de datos como patorn de diseno y en el que necesites mas informacion necesito que me hagas todas la preguntas que creas necesarias
+Tene en cuenta el csv como modelo para el cuadro de articulos. Necesitamos conservar la siguiente informacion, stock minimo por defecto  0 , alerta de stock por defecto 5, stock maximo y stock actual.  No hace falta interfaz grafica. Los reportes se generaran en un archivo csv. Se actualizara cada vez que se elija el archivo o se modifique el mismo agregando o modificando stock u articulos .
+
+Este seria el modeelo de el cuadro de articulos 
+Código del Artículo,Nombre del Artículo,Cantidad en Stock,Depósito
+COD001,Artículo C,96,Depósito 3
+COD002,Artículo A,28,Depósito 3
+En el caso del punto 2 tendremos que crear funcionalidades uilizando tipo de estructura la tabla de hash para poder modficir eliminar o agregart articulos Este es un requisisto sabarrias como vincularlo ? . Con respecto al archivo csv el programa debera tener un mismo archivo,es decir unico, en donde se modificado de acuerdo a lo que el cliente necesite cada vez que compilemos o querramos modificar algo .  las alertas de stock quee s emuestren por consola . Los reportes van a ser por salida estandar por consola . ESt es lo que hemos avanzado hasta el momento decime como proseguir 
