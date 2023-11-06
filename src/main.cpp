@@ -1,32 +1,33 @@
-#include "Article.h"
-#include <vector>
 #include <iostream>
+#include <vector>
+#include "HashTable.h"
+
+using namespace std;
+
 
 int main() {
-    // Crear algunos artículos de prueba
-    Article article1("001", "Laptop", 10, "Electronics");
-    Article article2("002", "Smartphone", 15, "Mobile");
-    Article article3("003", "Headphones", 5, "Accessories");
+    // Crear una tabla hash e insertar valores
+    HashTable hashTable;
+    hashTable.insert(1, 260);
+    hashTable.insert(1, 2540);
 
-    // Vector que contiene los artículos
-    std::vector<Article> inventory = {article1, article2, article3};
+    // Obtener un valor
+    cout << "El valor para la clave 1 es: " << hashTable.get(1) << std::endl;
+    cout << "El valor para la clave 11 es: " << hashTable.get(11) << std::endl;
+    cout << "El valor para la clave 12 es: " << hashTable.get(12) << std::endl;
+    cout << "El valor para la clave 13 es: " << hashTable.get(13) << std::endl;
+    cout << "El valor para la clave 14 es: " << hashTable.get(14) << std::endl;
+    cout << "El valor para la clave 15 es: " << hashTable.get(15) << std::endl;
+    cout << "El valor para la clave 61 es: " << hashTable.get(61) << std::endl;
+    cout << "El valor para la clave 62 es: " << hashTable.get(62) << std::endl;
 
-    // Mostrar la información de cada artículo
-    for (const Article& article : inventory) {
-        std::cout << "Code: " << article.getCode() << std::endl;
-        std::cout << "Name: " << article.getName() << std::endl;
-        std::cout << "Quantity: " << article.getQuantity() << std::endl;
-        std::cout << "Warehouse: " << article.getWarehouse() << std::endl;
-        std::cout << "-----------------------------------" << std::endl;
-    }
 
-    // Modificar la cantidad en stock de un artículo
-    std::cout << "Updating quantity for the first article..." << std::endl;
-    inventory[0].setQuantity(20);
+    cout << "Eliminando el valor para la clave 15 es: " << std::endl;
+    hashTable.remove(15);
 
-    // Verificar la actualización
-    std::cout << "Code: " << inventory[0].getCode() << std::endl;
-    std::cout << "Updated Quantity: " << inventory[0].getQuantity() << std::endl;
+    cout << "El valor para la clave 15 es: " << hashTable.get(15) << std::endl;
+
+
 
     return 0;
 }
