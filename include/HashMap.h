@@ -1,77 +1,168 @@
-
-/**
- * @file HashMap.h
- * @brief Archivo de cabecera para la clase HashMap.
- *
- * Define la clase HashMap que implementa una tabla hash genérica con encadenamiento
- * para la resolución de colisiones, utilizando la clase HashEntry para almacenar los elementos.
- *
- * @author virrr
- * @date 10/27/2023
- */
-
+// HashMap.h
 #ifndef PROYECTOFINAL_PROGRAMACION_III_HASHMAP_H
 #define PROYECTOFINAL_PROGRAMACION_III_HASHMAP_H
 
-#include "HashEntry.h"
-#include <iostream>
-#include <stdexcept>
+#include <vector>
+#include <list>
+#include <string>
+#include <algorithm>
 #include <functional>
+
+using namespace std;
+
+/**
+ * @class HashNode
+ * @brief Nodo de la tabla hash que contiene un par clave-valor.
+ *
+ * Esta clase define la estructura de un nodo utilizado en la tabla hash,
+ * que almacena un par clave-valor.
+ *
+ * @tparam T Tipo del valor almacenado en el nodo.
+ */
+template <typename T>
+class HashNode {
+public:
+    string key;   ///< La clave del nodo hash.
+    T value;      ///< El valor asociado con la clave.
+
+    /**
+     * @brief Constructor que inicializa un nodo hash con una clave y un valor dados.
+     * @param key Clave del nodo.
+     * @param value Valor asociado con la clave.
+     */
+    HashNode(const string& key, const T& value) : key(key), value(value) {}
+
+    // Destructor por defecto
+    ~HashNode() = default;
+};
 
 /**
  * @class HashMap
- * @brief Implementa una tabla hash con encadenamiento.
+ * @brief Clase que representa un mapa hash genérico.
  *
- * Esta clase utiliza un arreglo de punteros a HashEntry para almacenar los pares clave-valor.
- * Permite la inserción, búsqueda y eliminación de elementos.
+ * Implementa un mapa hash genérico que mapea claves de tipo string a valores de tipo T.
+ * La colisión de hash se maneja mediante encadenamiento.
  *
- * @tparam K Tipo de dato de la clave.
- * @tparam T Tipo de dato del valor.
+ * @tparam T Tipo del valor almacenado en el mapa hash.
  */
-template <class K, class T>
+template <typename T>
 class HashMap {
 private:
-    HashEntry<K, T> **table; ///< Arreglo de punteros a HashEntry que almacena los elementos.
-    unsigned int size;    ///< Tamaño del arreglo de punteros a HashEntry.
-    std::function<unsigned int(const K&)> hashFunc; ///< Función hash para calcular el índice del arreglo.
+    // La tabla hash será un vector de listas para manejar colisiones mediante encadenamiento.
+    vector<list<HashNode<T>>> table;
+    size_t capacity; ///< Capacidad inicial de la tabla hash.
+    size_t size;     ///< Tamaño actual de la tabla hash.
 
     /**
-     * @brief Función hash predeterminada para cadenas.
-     * @param clave Clave de tipo string para calcular su valor hash.
-     * @return Valor hash calculado para la clave.
+     * @brief Función de hash para calcular el hash de la clave.
+     * @param key La clave para la cual calcular el hash.
+     * @return El índice basado en el hash para la clave.
      */
-    unsigned int hashFunctionForStrings(const std::string &clave) {
-        unsigned int hash = 0;
-        for (char c : clave) {
-            hash = hash * 101 + c;
-        }
-        return hash;
+    size_t hashFunction(const string& key) const {
+        hash<string> hasher;
+        return hasher(key) % capacity;
     }
 
 public:
     /**
-     * @brief Constructor que inicializa el HashMap con un tamaño específico.
-     * @param size Tamaño del arreglo de HashEntry.
+     * @brief Constructor para inicializar la tabla hash con una capacidad fija.
+     * @param cap Capacidad inicial de la tabla hash.
      */
-    explicit HashMap(unsigned int size) : size(size), table(new HashEntry<K, T>*[size]()), hashFunc(hashFunctionForStrings) {
-        for (unsigned int i = 0; i < size; ++i) {
-            table[i] = nullptr;
-        }
+    explicit HashMap(size_t cap = 101) : capacity(cap), size(0) {
+        table.resize(capacity);
     }
 
     /**
-     * @brief Constructor que inicializa el HashMap con un tamaño y función hash específicos.
-     * @param size Tamaño del arreglo de HashEntry.
-     * @param func Función hash personalizada.
+     * @brief Función para agregar un par clave-valor al mapa hash.
+     * @param key La clave del elemento a agregar.
+     * @param value El valor asociado con la clave.
      */
-    HashMap(unsigned int size, std::function<unsigned int(const K&)> func) : size(size), hashFunc(func), table(new HashEntry<K, T>*[size]()) {
-        for (unsigned int i = 0; i < size; ++i) {
-            table[i] = nullptr;
+    void insert(const string& key, const T& value) {
+        size_t index = hashFunction(key);
+        auto& list = table[index];
+
+        // Comprobar si la clave ya existe en el mapa
+        for (auto& node : list) {
+            if (node.key == key) {
+                node.value = value;
+                return;
+            }
         }
+
+        // Insertar el nuevo nodo si la clave no existe
+        list.emplace_back(key, value);
+        ++size;
     }
 
-    // Additional methods will be included here with detailed documentation.
+    /**
+     * @brief Función para obtener el valor asociado con una clave.
+     * @param key La clave del elemento a obtener.
+     * @return Puntero al valor asociado o nullptr si la clave no se encuentra.
+     */
+    T* get(const string& key) {
+        size_t index = hashFunction(key);
+        auto& list = table[index];
 
+        // Encontrar el nodo con la clave dada
+        auto it = find_if(list.begin(), list.end(), [&key](const HashNode<T>& node) {
+            return node.key == key;
+        });
+
+        if (it != list.end()) {
+            return &(it->value);
+        }
+
+        // Si la clave no se encuentra, retornar nullptr
+        return nullptr;
+    }
+
+    /**
+     * @brief Función para verificar si el mapa hash contiene una clave.
+     * @param key La clave a verificar.
+     * @return Verdadero si la clave existe, falso en caso contrario.
+     */
+    bool contains(const string& key) const {
+        size_t index = hashFunction(key);
+        const auto& list = table[index];
+
+        // Verificar si algún nodo en la lista tiene la clave
+        return any_of(list.begin(), list.end(), [&key](const HashNode<T>& node) {
+            return node.key == key;
+        });
+    }
+
+    /**
+     * @brief Función para eliminar un par clave-valor del mapa hash.
+     * @param key La clave del elemento a eliminar.
+     * @return Verdadero si el elemento fue eliminado, falso en caso contrario.
+     */
+    bool remove(const string& key) {
+        size_t index = hashFunction(key);
+        auto& list = table[index];
+
+        auto it = find_if(list.begin(), list.end(), [&key](const HashNode<T>& node) {
+            return node.key == key;
+        });
+
+        if (it != list.end()) {
+            list.erase(it);
+            --size;
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @brief Función para obtener el tamaño actual del mapa hash.
+     * @return El tamaño del mapa hash.
+     */
+    size_t getSize() const {
+        return size;
+    }
+
+    // Destructor por defecto
+    ~HashMap() = default;
 };
 
 #endif //PROYECTOFINAL_PROGRAMACION_III_HASHMAP_H

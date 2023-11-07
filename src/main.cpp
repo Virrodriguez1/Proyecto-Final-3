@@ -1,33 +1,50 @@
+// main.cpp
+#include "HashMap.h"
 #include <iostream>
-#include <vector>
-#include "HashTable.h"
+#include <Article.h>
 
-using namespace std;
+// Definir un objeto personalizado para almacenar en el hashmap
+struct CustomObject {
+    int attr1;
+    double attr2;
+    string attr3;
+    char attr4;
+
+    // Constructor
+    CustomObject(int a1, double a2, string a3, char a4) : attr1(a1), attr2(a2), attr3(std::move(a3)), attr4(a4) {}
+
+    // Un constructor simple para poder inicializar sin parámetros
+    CustomObject() : attr1(0), attr2(0.0), attr3(""), attr4('\0') {}
+
+    // Destructor
+    ~CustomObject() = default;
+};
+
 
 
 int main() {
-    // Crear una tabla hash e insertar valores
-    HashTable hashTable;
-    hashTable.insert(1, 260);
-    hashTable.insert(1, 2540);
+    // Crear un hashmap para string keys y CustomObject values
+    HashMap<CustomObject> map;
+    HashMap<Article> map2;
 
-    // Obtener un valor
-    cout << "El valor para la clave 1 es: " << hashTable.get(1) << std::endl;
-    cout << "El valor para la clave 11 es: " << hashTable.get(11) << std::endl;
-    cout << "El valor para la clave 12 es: " << hashTable.get(12) << std::endl;
-    cout << "El valor para la clave 13 es: " << hashTable.get(13) << std::endl;
-    cout << "El valor para la clave 14 es: " << hashTable.get(14) << std::endl;
-    cout << "El valor para la clave 15 es: " << hashTable.get(15) << std::endl;
-    cout << "El valor para la clave 61 es: " << hashTable.get(61) << std::endl;
-    cout << "El valor para la clave 62 es: " << hashTable.get(62) << std::endl;
+    Article article("ORANAFE-065120","ANAFE VITROCERAMICO VITRO COOK 4", 1, "Deposito 4");
 
+    map2.insert("ORANAFE-065120-4",article);
 
-    cout << "Eliminando el valor para la clave 15 es: " << std::endl;
-    hashTable.remove(15);
+    // Obtener el valor usando la clave
+    Article* articleStored = map2.get("ORANAFE-065120-4");
+    if (articleStored != nullptr) {
+        cout << "Object found:" << endl;
+        cout << "Code: " << articleStored->getCode() << endl;
+        cout << "Name: " << articleStored->getName() << endl;
+        cout << "Quantity: " << articleStored->getQuantity() << endl;
+        cout << "Warehouse: " << articleStored->getWarehouse() << endl;
+    } else {
+        cout << "Object not found." << endl;
+    }
 
-    cout << "El valor para la clave 15 es: " << hashTable.get(15) << std::endl;
-
-
+    // Output the size of the map
+    cout << "The size of the map is: " << map.getSize() << endl;
 
     return 0;
 }
