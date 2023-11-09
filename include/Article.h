@@ -63,15 +63,19 @@ public:
     vector<int> getWarehouses() const { return warehouses; }
 
     // Puedes agregar más funciones miembro según sea necesario
-    string getWarehousesPlainText() {
-        string str;
+    string getWarehousesPlainText() const {
+        ostringstream os;
+        // Convertir la lista de almacenes en un string, separado por comas.
+        string warehousesStr;
         for (auto it = warehouses.begin(); it != warehouses.end(); ++it) {
             if (it != warehouses.begin()) {
-                str += ",";
+                warehousesStr += ", ";
             }
-            str += *it;
+            warehousesStr += to_string(*it);
         }
-        return str;
+        os << "Total Stock: " << getTotalStock() << endl;
+        os << "Warehouses: [" << warehousesStr << "]" << endl;
+        return os.str();
     }
 
     size_t getTotalStock() const {
@@ -82,35 +86,29 @@ public:
         return size;
     }
 
-    string toString() const {
+    string toStringStock() const {
         ostringstream os;
         os << "----------------------------------------"<<endl;
         os << "Article Details:" << endl;
         os << "Category: " << getCategory() << endl;
-        toStringOnlyStock();
+        os << "Name: " << getName() << endl;
+        os << "Total Stock: " << getTotalStock() << endl;
+        os << "----------------------------------------"<<endl<<endl<<endl<<endl;
+
 
         return os.str();
     }
 
-    string toStringOnlyStock() const{
+    string toStringStockByWarehouse()const {
         ostringstream os;
-
+        os << "----------------------------------------"<<endl;
+        os << "Article Details:" << endl;
+        os << "Category: " << getCategory() << endl;
         os << "Name: " << getName() << endl;
-
-        // Convertir la lista de almacenes en un string, separado por comas.
-        string warehousesStr;
-        for (auto it = warehouses.begin(); it != warehouses.end(); ++it) {
-            if (it != warehouses.begin()) {
-                warehousesStr += ", ";
-            }
-            warehousesStr += to_string(*it);
-        }
-        os << "Warehouses: [" << warehousesStr << "]" << endl;
-        os << "Total Stock: " << getTotalStock() << endl;
-        os << "----------------------------------------";
-        os << endl << endl;
-
+        os << getWarehousesPlainText();
+        os << "----------------------------------------"<<endl<<endl<<endl<<endl;
         return os.str();
+
     }
 
 };

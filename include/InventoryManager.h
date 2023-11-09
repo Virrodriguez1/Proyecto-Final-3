@@ -65,6 +65,7 @@ public:
     void listArticlesAtMinimumStockByWarehouse();
     void showIndividualArticleStock();
     void listArticlesAboveThreshold();
+    void showIndividualArticleStockByWarehouse();
 
     // Métodos adicionales para las operaciones de inventario...
     // Y así sucesivamente...

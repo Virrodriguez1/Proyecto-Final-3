@@ -25,20 +25,7 @@ void InventoryManager::loadInventory() {
 //            cout<< "La key es: "<< article.getCode() + "-" + article.getWarehouse() << endl;
 
         }
-
         cout<< "La carga fue exitosa."<< endl;
-
-        string code = "CF-TURBOTRO-3716";
-        Article art = *inventory.get(code);
-
-        if(art.getCode().empty()){
-            cout << "Not Found for code: " << code << endl;
-        }
-
-        cout << "Code: " << art.getCode()<< endl;
-        cout << "Name: " << art.getName()<< endl;
-        cout << "Warehouse: " << art.getWarehousesPlainText()<< endl;
-
     } catch (const std::runtime_error& e) {
         std::cerr << "Error al cargar el inventario: " << e.what() << std::endl;
         // Aquí podríamos decidir lanzar de nuevo la excepción o manejarla de alguna otra manera.
@@ -67,7 +54,7 @@ void InventoryManager::displayMainMenu() {
 
 void InventoryManager::listArticlesAtMinimumStock() {
     for(auto &article:lowStock){
-        cout<< article.toString();
+        cout<< article.toStringStock();
     }
 }
 
@@ -77,13 +64,18 @@ void InventoryManager::listArticlesAtMinimumStockByWarehouse() {
 
 void InventoryManager::showIndividualArticleStock() {
     for(auto &article:articlesTMP){
-        cout<< article.toStringOnlyStock();
+        cout<< article.toStringStock();
     }
-
 }
 
 void InventoryManager::listArticlesAboveThreshold() {
     for(auto & article:highStock){
-        cout << article.toString();
+        cout << article.toStringStock();
+    }
+}
+
+void InventoryManager::showIndividualArticleStockByWarehouse() {
+    for(auto &article:articlesTMP){
+        cout << article.toStringStockByWarehouse();
     }
 }
