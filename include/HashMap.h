@@ -7,6 +7,8 @@
 #include <string>
 #include <algorithm>
 #include <functional>
+#include <iostream>
+#include <Article.h>
 
 using namespace std;
 
@@ -113,6 +115,7 @@ public:
         }
 
         // Si la clave no se encuentra, retornar nullptr
+        cout<< "Key Not Found: "<< key <<endl;
         return nullptr;
     }
 

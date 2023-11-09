@@ -3,6 +3,8 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
+#include <sstream>
 
 using namespace std;
 /**
@@ -14,10 +16,20 @@ using namespace std;
  */
 class Article {
 private:
+    string category;
+public:
+    const string &getCategory() const {
+        return category;
+    }
+
+    void setCategory(const string &category) {
+        Article::category = category;
+    }
+
+private:
     string code;      ///< Código único del artículo.
     string name;      ///< Nombre descriptivo del artículo.
-    int quantity;     ///< Cantidad del artículo en stock.
-    string warehouse; ///< Nombre del depósito donde se almacena el artículo.
+    vector<int> warehouses; ///< Nombre del depósito donde se almacena el artículo.
 
 public:
     /**
@@ -27,8 +39,8 @@ public:
      * @param quantity Cantidad en stock.
      * @param warehouse Depósito donde se encuentra el artículo.
      */
-    Article(const string& code, const string& name, int quantity, const string& warehouse)
-            : code(code), name(name), quantity(quantity), warehouse(warehouse) {}
+    Article(const string& code, const string& name, const vector<int>& warehouse)
+            : code(code), name(name), warehouses(warehouse) {}
 
     // Getters y setters para cada atributo.
 
@@ -45,24 +57,55 @@ public:
     string getName() const { return name; }
 
     /**
-     * @brief Obtiene la cantidad en stock del artículo.
-     * @return Cantidad del artículo como entero.
-     */
-    int getQuantity() const { return quantity; }
-
-    /**
      * @brief Obtiene el depósito donde se almacena el artículo.
      * @return Nombre del depósito como string.
      */
-    string getWarehouse() const { return warehouse; }
-
-    /**
-     * @brief Establece una nueva cantidad en stock para el artículo.
-     * @param newQuantity La nueva cantidad en stock.
-     */
-    void setQuantity(int newQuantity) { quantity = newQuantity; }
+    vector<int> getWarehouses() const { return warehouses; }
 
     // Puedes agregar más funciones miembro según sea necesario
+    string getWarehousesPlainText() {
+        string str;
+        for (auto it = warehouses.begin(); it != warehouses.end(); ++it) {
+            if (it != warehouses.begin()) {
+                str += ",";
+            }
+            str += *it;
+        }
+        return str;
+    }
+
+    size_t getTotalStock() const {
+        size_t size = 0;
+        for(auto const &warehouse:warehouses){
+            size += warehouse;
+        }
+        return size;
+    }
+
+    string toString() const {
+        ostringstream os;
+        os << "----------------------------------------"<<endl;
+        os << "Article Details:" << endl;
+        os << "Category: " << getCategory() << endl;
+        os << "Code: " << getCode() << endl;
+        os << "Name: " << getName() << endl;
+
+        // Convertir la lista de almacenes en un string, separado por comas.
+        string warehousesStr;
+        for (auto it = warehouses.begin(); it != warehouses.end(); ++it) {
+            if (it != warehouses.begin()) {
+                warehousesStr += ", ";
+            }
+            warehousesStr += to_string(*it);
+        }
+        os << "Warehouses: [" << warehousesStr << "]" << endl;
+        os << "Total Stock: " << getTotalStock() << endl;
+        os << "----------------------------------------";
+        os << endl << endl;
+
+        return os.str();
+    }
+
 };
 
 #endif //PROYECTOFINAL_PROGRAMACION_III_ARTICLE_H

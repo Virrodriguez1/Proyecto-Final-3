@@ -1,6 +1,6 @@
 
-#ifndef CSVHANDLER_H
-#define CSVHANDLER_H
+#ifndef CSVMANAGER_H
+#define CSVMANAGER_H
 
 #include <string>
 #include <fstream>
@@ -13,13 +13,13 @@
 using namespace std;
 
 /**
- * @class CSVHandler
+ * @class CSVManager
  * @brief Clase encargada de manejar la lectura y escritura de archivos CSV.
  *
  * Esta clase provee funcionalidades para interactuar con archivos CSV, permitiendo leer y escribir datos,
  * y mapearlos a objetos de la clase Article. Además, incluye validación de datos y manejo de errores.
  */
-class CSVHandler {
+class CSVManager {
 private:
     string filePath; ///< Ruta al archivo CSV.
     char delimiter; ///< Delimitador utilizado en el archivo CSV.
@@ -27,47 +27,15 @@ private:
     ifstream fileStream; ///< Flujo del archivo para leer/escribir.
 
 
-    /**
-     * @brief Convierte una línea de CSV en una lista de objetos Article.
-     * @param csvLine Línea de texto del archivo CSV.
-     * @return Lista de objetos Article.
-     * @todo Implementar el manejo de múltiples depósitos por línea de CSV.
-     */
-    std::list<Article> mapToArticle(const std::string& csvLine) {
-        std::list<Article> articles;
-        std::stringstream ss(csvLine);
 
-        // Asumimos que los primeros tres tokens son la categoría, el código de barras y el nombre del artículo
-        std::string category, barcode, name, token;
-        std::getline(ss, category, delimiter);
-        std::getline(ss, barcode, delimiter);
-        std::getline(ss, name, delimiter);
-
-        // Los siguientes tokens son las cantidades en cada depósito
-        // todo: estudiar si hay alguna forma de calcular cuantos depositos hay. pista, las 3 primeras columas son fijas, el resto son depositos
-        int depositCount = 5;  // Asumimos que hay 5 depósitos.
-
-        for (int i = 0; i < depositCount; ++i) {
-            std::getline(ss, token, delimiter);
-            if (!token.empty()) {
-                int quantity = std::stoi(token);
-                if (quantity > 0) {
-                    // Creamos un nuevo artículo por cada depósito con cantidad > 0, usamos i + 1 porque empezamos con i = 0
-                    //todo hacer chechkeo si existe otro articulo en stock mismo código hash. PENSARLO MAÑANA
-                    Article article(barcode, name, quantity, "Depósito" + std::to_string(i + 1));
-                    articles.push_back(article);
-                }
-            }
-        }
-
-        return articles;
-    }
 
 public:
     /**
-     * @brief Constructor por defecto de CSVHandler.
+     * @brief Constructor por defecto de CSVManager.
      */
-    CSVHandler() : delimiter(','), hasHeaders(true) {}
+    CSVManager() : delimiter(','), hasHeaders(true) {}
+
+    explicit CSVManager(const string &filePath) : filePath(filePath), delimiter(','), hasHeaders(true) {}
 
     /**
      * @brief Lee un archivo CSV y devuelve los artículos contenidos.
@@ -83,19 +51,17 @@ public:
         if (!fileStream.is_open()) {
             throw runtime_error("No se puede abrir el archivo.");
         }
+        if(hasHeaders){
+            getline(fileStream, line);
+        }
         // Leer líneas del archivo CSV
         while (getline(fileStream, line)) {
             // Validar y mapear la línea a un objeto Article
             if (validateData(line)) {
-                /*
-                 * todo. Tener en cuenta lo siguiente. Por cada linea, se puede tener hasta 5 depositos.
-                 * lo que tenemos que hacer es, tener una lista de todos los articulos.
-                 * la primer linea puede tener hasta 5, la segunda puede aportar hasta 5 nuevos articulos, esto quiere
-                 * decir que debemos agregar esos "hasta 5 articulos" de la linea 2 a la lista ya creada, y no hacer una lista nueva.
-                 * o sea a, list<Article>articles; quiero agregarle todos los articulos que me devuelva el metodo
-                 * mapToArticle(line);
-                */
-                articles = mapToArticle(line);
+                //etireamos de esta forma ya que en cada linea puede haber mas de un deposito, mapToArticle los procesa
+                //y develve una lista de articulos, que iteramos para guardar uno por uno en la lista definitiva.
+
+                    articles.push_back(mapToArticle(line));
             }
         }
         fileStream.close();
@@ -103,24 +69,25 @@ public:
     }
 
     /**
-     * @brief Escribe una lista de artículos en un archivo CSV.
-     * @param articles Lista de objetos Article para escribir en el archivo.
-     * @param filePath Ruta al archivo CSV.
-     * @exception runtime_error Si no se puede escribir en el archivo.
-     */
-    
-    /**
      * @brief Convierte un objeto Article en una línea de CSV.
      * @param article Objeto Article a convertir.
      * @return String que representa la línea de CSV del artículo.
+     * ?privado??
      */
-    std::string articleToCSVLine(const Article& article) const {
-        std::string csvLine = article.getCode() + delimiter +
+    std::string articleToCSVLine(Article article) const {
+
+        std::string csvLine = article.getCategory() + delimiter +
+                              article.getCode() + delimiter +
                               article.getName() + delimiter +
-                              std::to_string(article.getQuantity()) + delimiter +
-                              article.getWarehouse();
+                              article.getWarehousesPlainText();
+
+        string str = "";
+        for(const auto warehouse: article.getWarehouses()){
+            str += warehouse + delimiter;
+        }
+
         // Agregar más campos si son necesarios
-        return csvLine;
+        return csvLine + str;
     }
 
 
@@ -166,6 +133,46 @@ public:
             fileStream.close();
         }
     }
+    /**
+    * @brief Convierte una línea de CSV en una lista de objetos Article.
+    * @param csvLine Línea de texto del archivo CSV.
+    * @return Lista de objetos Article.
+    */
+    Article mapToArticle(const std::string& csvLine) const {
+        // Crear una lista para almacenar los artículos
+        std::list<Article> articles;
+        vector<int> warehouses;
+
+        // Crear un stringstream de csvLine
+        std::stringstream ss(csvLine);
+
+        // Asumir que los primeros tres tokens son la categoría, el código de barras y el nombre del artículo
+        std::string category, barcode, name, token;
+        std::getline(ss, category, delimiter);
+        std::getline(ss, barcode, delimiter);
+        std::getline(ss, name, delimiter);
+
+        // El resto de los tokens son las cantidades en cada depósito
+        // Usar un bucle para leer cada cantidad y crear un objeto Article si la cantidad > 0
+        int depositNumber = 1;  // Inicializar el número de depósito
+        string str;
+        while (std::getline(ss, token, delimiter)) {
+            if (!token.empty()) {
+                int quantity = std::stoi(token);
+                if (quantity > 0) {
+                    // El número de depósito se calcula con base en la posición actual en la línea
+                    // teniendo en cuenta que las primeras tres columnas son fijas.
+                    warehouses.push_back(quantity);
+                }
+            } else{
+                warehouses.push_back(0);
+            }
+            depositNumber++; // Incrementar el número de depósito para la siguiente columna
+        }if(token.empty()){
+            warehouses.push_back(0);
+        }
+        return Article(barcode, name, warehouses);
+    }
 };
 
-#endif // CSVHANDLER_H
+#endif // CSVMANAGER_H

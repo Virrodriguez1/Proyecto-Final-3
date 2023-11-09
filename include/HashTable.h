@@ -1,17 +1,20 @@
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
+#include "Article.h" // Asegúrate de incluir la clase Article
+
+using namespace std;
 
 /**
  * @class HashEntry
  * @brief Representa una entrada en la tabla hash.
  *
- * Contiene una clave y un valor, y un puntero al siguiente HashEntry
+ * Contiene una clave y un puntero a un objeto Article, y un puntero al siguiente HashEntry
  * para manejar las colisiones mediante encadenamiento.
  */
 class HashEntry {
 private:
-    int key; ///< Clave de la entrada.
-    int value; ///< Valor de la entrada.
+    string key; ///< Clave de la entrada, que es una combinación del código de barras y el nombre del depósito.
+    Article* value; ///< Puntero al objeto Article.
     HashEntry *next; ///< Puntero al siguiente HashEntry en la lista.
 
 public:
@@ -20,7 +23,7 @@ public:
      * @param key Clave de la entrada.
      * @param value Valor de la entrada.
      */
-    HashEntry(int key, int value);
+    HashEntry(int key, Article* value);
     
     /**
      * @brief Obtiene la clave de la entrada.
@@ -63,11 +66,11 @@ private:
     HashEntry **table; ///< Arreglo de punteros a HashEntry.
 
     /**
-     * @brief Función de hash privada que calcula el índice de una clave.
+     * @brief Función de hash privada que calcula el índice de una clave de tipo string.
      * @param key Clave para calcular el índice.
      * @return Índice calculado para la clave.
      */
-    int hashFunction(int key) const;
+    int hashFunction(string key) const;
 
 public:
     HashTable(); ///< Constructor de la tabla hash.
@@ -78,20 +81,27 @@ public:
      * @param key Clave para el nuevo valor.
      * @param value Valor a insertar asociado a la clave.
      */
-    void insert(int key, int value);
+    void insert(string key, Article* value);
     
     /**
      * @brief Elimina una entrada con la clave dada de la tabla hash.
      * @param key Clave de la entrada a eliminar.
      */
-    void remove(int key);
+    void remove(string key);
     
     /**
      * @brief Obtiene el valor asociado con la clave dada.
      * @param key Clave de la entrada a buscar.
      * @return Valor asociado con la clave, o -1 si la clave no se encuentra.
      */
-    int get(int key) const;
+    Article* get(string key) const;
+
+    /**
+     * @brief
+     * @param
+     * @return
+     */
+    bool containsKey(string key) const;
 };
 
 #endif // HASHTABLE_H
