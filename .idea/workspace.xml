@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="Inventario" targetName="Inventario" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5ac2b561-08ef-4ecc-b10d-3978de2fdb56" name="Changes" comment="Las push">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.txt" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2023" />
+    <option name="minorVersion" value="1.3" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2XddN0SbLPEWnD5HnyeovXKRlmL" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;,
+    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\feder\CLionProjects\Proyecto-Final-3\include" />
+      <recent name="C:\Users\feder\CLionProjects\Proyecto-Final-3\src" />
+    </key>
+  </component>
+  <component name="RunManager" selected="CMake Application.Proyecto Vir">
+    <configuration name="Inventario" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Inventario" TARGET_NAME="Inventario" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Inventario" RUN_TARGET_NAME="Inventario">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Proyecto Vir" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Inventario" TARGET_NAME="Inventario" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Inventario" RUN_TARGET_NAME="Inventario">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.Proyecto Vir" />
+      <item itemvalue="CMake Application.Inventario" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5ac2b561-08ef-4ecc-b10d-3978de2fdb56" name="Changes" comment="" />
+      <created>1698962846467</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1698962846467</updated>
+      <workItem from="1698962847476" duration="1656000" />
+      <workItem from="1698964751932" duration="242000" />
+      <workItem from="1698965004266" duration="419000" />
+      <workItem from="1698965435225" duration="1369000" />
+      <workItem from="1698968908171" duration="1193000" />
+      <workItem from="1698970126587" duration="5000" />
+      <workItem from="1698970139611" duration="6229000" />
+      <workItem from="1699226617691" duration="641000" />
+      <workItem from="1699228078275" duration="11601000" />
+      <workItem from="1699311309988" duration="1942000" />
+      <workItem from="1699313280779" duration="9365000" />
+      <workItem from="1699412394172" duration="9342000" />
+      <workItem from="1699462660771" duration="37000" />
+      <workItem from="1699480589605" duration="35162000" />
+      <workItem from="1699519987295" duration="1830000" />
+    </task>
+    <task id="LOCAL-00001" summary="Añadidos README en inglés y español y reestructuración de directorios del proyecto&#10;&#10;- Se han creado dos archivos README, uno para inglés (README.md) y otro para español (README_ES.md), con las instrucciones y descripción del proyecto.&#10;- Se ha organizado la estructura de directorios del proyecto para seguir las mejores prácticas, incluyendo la separación del código fuente, cabeceras, documentación y archivos de datos.">
+      <created>1698969032457</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1698969032457</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Añadidos README en inglés y español y reestructuración de directorios del proyecto&#10;&#10;- Se han creado dos archivos README, uno para inglés (README.md) y otro para español (README_ES.md), con las instrucciones y descripción del proyecto.&#10;- Se ha organizado la estructura de directorios del proyecto para seguir las mejores prácticas, incluyendo la separación del código fuente, cabeceras, documentación y archivos de datos.">
+      <created>1698969106671</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1698969106671</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Movidos las librerias de Hash">
+      <created>1698972457517</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1698972457517</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Eliminados archivos viejos">
+      <created>1698972489105</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1698972489105</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add Article class and main for testing&#10;&#10;- Implement the Article class with getters and setters for item management.&#10;- Create a main.cpp file with test cases for the Article class functionality, including instantiation and property manipulation.">
+      <created>1698973666774</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1698973666774</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Updated HashMap.h HashEntry.h">
+      <created>1698976408567</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1698976408567</updated>
+    </task>
+    <task id="LOCAL-00007" summary="New HashMap.h/.cpp implementation">
+      <option name="closed" value="true" />
+      <created>1699237902203</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1699237902203</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat: Añadir clase HashMap genérica con documentación completa&#10;&#10;Se ha implementado la clase genérica HashMap, que permite mapear claves de tipo string a valores de cualquier tipo. Se ha añadido documentación detallada al estilo Doxygen en español, cubriendo clases, métodos y atributos privados para mantener la coherencia con la documentación existente y facilitar la comprensión y mantenimiento del código.">
+      <option name="closed" value="true" />
+      <created>1699322382551</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1699322382551</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Añade la clase CSVManager.h para manejo de archivos CSV&#10;&#10;Se ha creado la clase CSVHandler con la estructura base y documentación Doxygen. Esta clase se encargará de leer y escribir archivos CSV, mapear líneas a objetos Article y manejar errores relacionados con el proceso de archivos CSV. Se han incluido etiquetas @todo en la documentación para tareas de implementación pendientes.">
+      <option name="closed" value="true" />
+      <created>1699414848247</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1699414848247</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Añade la clase CSVManager.h para manejo de archivos CSV&#10;&#10;Se ha creado la clase CSVManager con la estructura base y documentación Doxygen. Esta clase se encargará de leer y escribir archivos CSV, mapear líneas a objetos Article y manejar errores relacionados con el proceso de archivos CSV. Se han incluido etiquetas @todo en la documentación para tareas de implementación pendientes.">
+      <option name="closed" value="true" />
+      <created>1699421643038</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1699421643038</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Conseguido &#10;loadInventory&#10;showTotalDifferentArticles&#10;showTotalArticles">
+      <option name="closed" value="true" />
+      <created>1699514221661</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1699514221662</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Implementado metodo listArticlesAboveThreshold">
+      <option name="closed" value="true" />
+      <created>1699514947938</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1699514947938</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Implementado metodo showIndividualArticleStock">
+      <option name="closed" value="true" />
+      <created>1699515318961</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1699515318961</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Upload new Make">
+      <option name="closed" value="true" />
+      <created>1699519737393</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1699519737393</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Las push">
+      <option name="closed" value="true" />
+      <created>1699520068526</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1699520068526</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticEditVcpkgJson value="false" />
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticFoundErrors value="true" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Añadidos README en inglés y español y reestructuración de directorios del proyecto&#10;&#10;- Se han creado dos archivos README, uno para inglés (README.md) y otro para español (README_ES.md), con las instrucciones y descripción del proyecto.&#10;- Se ha organizado la estructura de directorios del proyecto para seguir las mejores prácticas, incluyendo la separación del código fuente, cabeceras, documentación y archivos de datos." />
+    <MESSAGE value="Movidos las librerias de Hash" />
+    <MESSAGE value="Eliminados archivos viejos" />
+    <MESSAGE value="Add Article class and main for testing&#10;&#10;- Implement the Article class with getters and setters for item management.&#10;- Create a main.cpp file with test cases for the Article class functionality, including instantiation and property manipulation." />
+    <MESSAGE value="Updated HashMap.h HashEntry.h" />
+    <MESSAGE value="New HashMap.h/.cpp implementation" />
+    <MESSAGE value="feat: Añadir clase HashMap genérica con documentación completa&#10;&#10;Se ha implementado la clase genérica HashMap, que permite mapear claves de tipo string a valores de cualquier tipo. Se ha añadido documentación detallada al estilo Doxygen en español, cubriendo clases, métodos y atributos privados para mantener la coherencia con la documentación existente y facilitar la comprensión y mantenimiento del código." />
+    <MESSAGE value="Añade la clase CSVManager.h para manejo de archivos CSV&#10;&#10;Se ha creado la clase CSVHandler con la estructura base y documentación Doxygen. Esta clase se encargará de leer y escribir archivos CSV, mapear líneas a objetos Article y manejar errores relacionados con el proceso de archivos CSV. Se han incluido etiquetas @todo en la documentación para tareas de implementación pendientes." />
+    <MESSAGE value="Añade la clase CSVManager.h para manejo de archivos CSV&#10;&#10;Se ha creado la clase CSVManager con la estructura base y documentación Doxygen. Esta clase se encargará de leer y escribir archivos CSV, mapear líneas a objetos Article y manejar errores relacionados con el proceso de archivos CSV. Se han incluido etiquetas @todo en la documentación para tareas de implementación pendientes." />
+    <MESSAGE value="Conseguido &#10;loadInventory&#10;showTotalDifferentArticles&#10;showTotalArticles" />
+    <MESSAGE value="Implementado metodo listArticlesAboveThreshold" />
+    <MESSAGE value="Implementado metodo showIndividualArticleStock" />
+    <MESSAGE value="Upload new Make" />
+    <MESSAGE value="Las push" />
+    <option name="LAST_COMMIT_MESSAGE" value="Las push" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/include/Article.h</url>
+          <line>106</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint enabled="true" type="javascript-exception" />
+      </default-breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="CMakeRunConfiguration">
+        <watch expression="this-&gt;lowStock[9].warehouses[0]" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>

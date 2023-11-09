@@ -1,0 +1,485 @@
+Index: include/Article.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#ifndef PROYECTOFINAL_PROGRAMACION_III_ARTICLE_H\r\n#define PROYECTOFINAL_PROGRAMACION_III_ARTICLE_H\r\n\r\n#include <string>\r\n#include <iostream>\r\n#include <vector>\r\n#include <sstream>\r\n\r\nusing namespace std;\r\n/**\r\n * @class Article\r\n * @brief Clase que representa un artículo en el inventario.\r\n *\r\n * Encapsula los detalles de un artículo, incluyendo su código, nombre,\r\n * cantidad en stock y el depósito donde se encuentra.\r\n */\r\nclass Article {\r\nprivate:\r\n    string category;\r\npublic:\r\n    const string &getCategory() const {\r\n        return category;\r\n    }\r\n\r\n    void setCategory(const string &category) {\r\n        Article::category = category;\r\n    }\r\n\r\nprivate:\r\n    string code;      ///< Código único del artículo.\r\n    string name;      ///< Nombre descriptivo del artículo.\r\n    vector<int> warehouses; ///< Nombre del depósito donde se almacena el artículo.\r\n\r\npublic:\r\n    /**\r\n     * @brief Constructor para crear un nuevo artículo.\r\n     * @param code Código del artículo.\r\n     * @param name Nombre del artículo.\r\n     * @param quantity Cantidad en stock.\r\n     * @param warehouse Depósito donde se encuentra el artículo.\r\n     */\r\n    Article(const string& code, const string& name, const vector<int>& warehouse)\r\n            : code(code), name(name), warehouses(warehouse) {}\r\n\r\n    // Getters y setters para cada atributo.\r\n\r\n    /**\r\n     * @brief Obtiene el código del artículo.\r\n     * @return Código del artículo como string.\r\n     */\r\n    string getCode() const { return code; }\r\n\r\n    /**\r\n     * @brief Obtiene el nombre del artículo.\r\n     * @return Nombre del artículo como string.\r\n     */\r\n    string getName() const { return name; }\r\n\r\n    /**\r\n     * @brief Obtiene el depósito donde se almacena el artículo.\r\n     * @return Nombre del depósito como string.\r\n     */\r\n    vector<int> getWarehouses() const { return warehouses; }\r\n\r\n    // Puedes agregar más funciones miembro según sea necesario\r\n    string getWarehousesPlainText() {\r\n        string str;\r\n        for (auto it = warehouses.begin(); it != warehouses.end(); ++it) {\r\n            if (it != warehouses.begin()) {\r\n                str += \",\";\r\n            }\r\n            str += *it;\r\n        }\r\n        return str;\r\n    }\r\n\r\n    size_t getTotalStock() const {\r\n        size_t size = 0;\r\n        for(auto const &warehouse:warehouses){\r\n            size += warehouse;\r\n        }\r\n        return size;\r\n    }\r\n\r\n    string toString() const {\r\n        ostringstream os;\r\n        os << \"----------------------------------------\"<<endl;\r\n        os << \"Article Details:\" << endl;\r\n        os << \"Category: \" << getCategory() << endl;\r\n        toStringOnlyStock();\r\n\r\n        return os.str();\r\n    }\r\n\r\n    string toStringOnlyStock() const{\r\n        ostringstream os;\r\n\r\n        os << \"Name: \" << getName() << endl;\r\n\r\n        // Convertir la lista de almacenes en un string, separado por comas.\r\n        string warehousesStr;\r\n        for (auto it = warehouses.begin(); it != warehouses.end(); ++it) {\r\n            if (it != warehouses.begin()) {\r\n                warehousesStr += \", \";\r\n            }\r\n            warehousesStr += to_string(*it);\r\n        }\r\n        os << \"Warehouses: [\" << warehousesStr << \"]\" << endl;\r\n        os << \"Total Stock: \" << getTotalStock() << endl;\r\n        os << \"----------------------------------------\";\r\n        os << endl << endl;\r\n\r\n        return os.str();\r\n    }\r\n\r\n};\r\n\r\n#endif //PROYECTOFINAL_PROGRAMACION_III_ARTICLE_H\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/include/Article.h b/include/Article.h
+--- a/include/Article.h	(revision 89efdb1c006dd1a68a7ccc467bfe9ec22a60bda2)
++++ b/include/Article.h	(date 1699518984055)
+@@ -63,15 +63,19 @@
+     vector<int> getWarehouses() const { return warehouses; }
+ 
+     // Puedes agregar más funciones miembro según sea necesario
+-    string getWarehousesPlainText() {
+-        string str;
++    string getWarehousesPlainText() const {
++        ostringstream os;
++        // Convertir la lista de almacenes en un string, separado por comas.
++        string warehousesStr;
+         for (auto it = warehouses.begin(); it != warehouses.end(); ++it) {
+             if (it != warehouses.begin()) {
+-                str += ",";
++                warehousesStr += ", ";
+             }
+-            str += *it;
++            warehousesStr += to_string(*it);
+         }
+-        return str;
++        os << "Total Stock: " << getTotalStock() << endl;
++        os << "Warehouses: [" << warehousesStr << "]" << endl;
++        return os.str();
+     }
+ 
+     size_t getTotalStock() const {
+@@ -82,35 +86,29 @@
+         return size;
+     }
+ 
+-    string toString() const {
++    string toStringStock() const {
+         ostringstream os;
+         os << "----------------------------------------"<<endl;
+         os << "Article Details:" << endl;
+         os << "Category: " << getCategory() << endl;
+-        toStringOnlyStock();
++        os << "Name: " << getName() << endl;
++        os << "Total Stock: " << getTotalStock() << endl;
++        os << "----------------------------------------"<<endl<<endl<<endl<<endl;
++
+ 
+         return os.str();
+     }
+ 
+-    string toStringOnlyStock() const{
++    string toStringStockByWarehouse()const {
+         ostringstream os;
+-
++        os << "----------------------------------------"<<endl;
++        os << "Article Details:" << endl;
++        os << "Category: " << getCategory() << endl;
+         os << "Name: " << getName() << endl;
+-
+-        // Convertir la lista de almacenes en un string, separado por comas.
+-        string warehousesStr;
+-        for (auto it = warehouses.begin(); it != warehouses.end(); ++it) {
+-            if (it != warehouses.begin()) {
+-                warehousesStr += ", ";
+-            }
+-            warehousesStr += to_string(*it);
+-        }
+-        os << "Warehouses: [" << warehousesStr << "]" << endl;
+-        os << "Total Stock: " << getTotalStock() << endl;
+-        os << "----------------------------------------";
+-        os << endl << endl;
+-
++        os << getWarehousesPlainText();
++        os << "----------------------------------------"<<endl<<endl<<endl<<endl;
+         return os.str();
++
+     }
+ 
+ };
+Index: src/InventoryManager.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\n#include \"InventoryManager.h\"\r\n\r\nvoid InventoryManager::loadInventory() {\r\n    try {\r\n        // Leer el archivo CSV utilizando CSVManager\r\n        auto articlesList = csvManager.readCSV(fileName);\r\n\r\n        // Reinicializar el inventario para limpiarlo antes de cargar nuevos datos\r\n        inventory = HashMap<Article>();  // Esto asume que la clase HashMap puede ser reinicializada así.\r\n\r\n        // Iterar sobre la lista de artículos y añadir cada uno al inventario\r\n        for (Article article : articlesList) {\r\n            // Insertar el artículo en el inventario usando el código de barras como clave\r\n            articlesTMP.push_back(article);\r\n\r\n            if(article.getTotalStock() <= MINIMUM_STOCK){\r\n                lowStock.push_back(article);\r\n            } else{\r\n                if(article.getTotalStock()>= MAX_STOCK){\r\n                    highStock.push_back(article);\r\n                }\r\n            }\r\n            inventory.insert(article.getCode(), article);\r\n//            cout<< \"La key es: \"<< article.getCode() + \"-\" + article.getWarehouse() << endl;\r\n\r\n        }\r\n\r\n        cout<< \"La carga fue exitosa.\"<< endl;\r\n\r\n        string code = \"CF-TURBOTRO-3716\";\r\n        Article art = *inventory.get(code);\r\n\r\n        if(art.getCode().empty()){\r\n            cout << \"Not Found for code: \" << code << endl;\r\n        }\r\n\r\n        cout << \"Code: \" << art.getCode()<< endl;\r\n        cout << \"Name: \" << art.getName()<< endl;\r\n        cout << \"Warehouse: \" << art.getWarehousesPlainText()<< endl;\r\n\r\n    } catch (const std::runtime_error& e) {\r\n        std::cerr << \"Error al cargar el inventario: \" << e.what() << std::endl;\r\n        // Aquí podríamos decidir lanzar de nuevo la excepción o manejarla de alguna otra manera.\r\n    }\r\n}\r\n\r\nsize_t InventoryManager::showTotalDifferentArticles() {\r\n    return inventory.getSize();\r\n}\r\nsize_t InventoryManager::showTotalArticles() {\r\n    size_t size = 0;\r\n    for(auto &article:articlesTMP){\r\n        size += article.getTotalStock();\r\n    }\r\n\r\n    return size;\r\n}\r\n\r\nvoid InventoryManager::saveInventory() {\r\n\r\n}\r\n\r\nvoid InventoryManager::displayMainMenu() {\r\n\r\n}\r\n\r\nvoid InventoryManager::listArticlesAtMinimumStock() {\r\n    for(auto &article:lowStock){\r\n        cout<< article.toString();\r\n    }\r\n}\r\n\r\nvoid InventoryManager::listArticlesAtMinimumStockByWarehouse() {\r\n\r\n}\r\n\r\nvoid InventoryManager::showIndividualArticleStock() {\r\n    for(auto &article:articlesTMP){\r\n        cout<< article.toStringOnlyStock();\r\n    }\r\n\r\n}\r\n\r\nvoid InventoryManager::listArticlesAboveThreshold() {\r\n    for(auto & article:highStock){\r\n        cout << article.toString();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/InventoryManager.cpp b/src/InventoryManager.cpp
+--- a/src/InventoryManager.cpp	(revision 89efdb1c006dd1a68a7ccc467bfe9ec22a60bda2)
++++ b/src/InventoryManager.cpp	(date 1699519587109)
+@@ -25,20 +25,7 @@
+ //            cout<< "La key es: "<< article.getCode() + "-" + article.getWarehouse() << endl;
+ 
+         }
+-
+         cout<< "La carga fue exitosa."<< endl;
+-
+-        string code = "CF-TURBOTRO-3716";
+-        Article art = *inventory.get(code);
+-
+-        if(art.getCode().empty()){
+-            cout << "Not Found for code: " << code << endl;
+-        }
+-
+-        cout << "Code: " << art.getCode()<< endl;
+-        cout << "Name: " << art.getName()<< endl;
+-        cout << "Warehouse: " << art.getWarehousesPlainText()<< endl;
+-
+     } catch (const std::runtime_error& e) {
+         std::cerr << "Error al cargar el inventario: " << e.what() << std::endl;
+         // Aquí podríamos decidir lanzar de nuevo la excepción o manejarla de alguna otra manera.
+@@ -67,7 +54,7 @@
+ 
+ void InventoryManager::listArticlesAtMinimumStock() {
+     for(auto &article:lowStock){
+-        cout<< article.toString();
++        cout<< article.toStringStock();
+     }
+ }
+ 
+@@ -77,13 +64,18 @@
+ 
+ void InventoryManager::showIndividualArticleStock() {
+     for(auto &article:articlesTMP){
+-        cout<< article.toStringOnlyStock();
++        cout<< article.toStringStock();
+     }
+-
+ }
+ 
+ void InventoryManager::listArticlesAboveThreshold() {
+     for(auto & article:highStock){
+-        cout << article.toString();
++        cout << article.toStringStock();
++    }
++}
++
++void InventoryManager::showIndividualArticleStockByWarehouse() {
++    for(auto &article:articlesTMP){
++        cout << article.toStringStockByWarehouse();
+     }
+ }
+Index: include/InventoryManager.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\n#ifndef INVENTORY_MANAGER_H\r\n#define INVENTORY_MANAGER_H\r\n\r\n#include \"CSVManager.h\"\r\n#include \"Article.h\"\r\n#include \"HashMap.h\"\r\n#include <string>\r\n\r\n/**\r\n * @class InventoryManager\r\n * @brief Gestiona el inventario de artículos.\r\n * \r\n * Esta clase es responsable de cargar, actualizar y guardar el inventario\r\n * de artículos a partir de un archivo CSV. Interactúa con la clase CSVManager\r\n * para realizar operaciones relacionadas con archivos CSV.\r\n */\r\nclass InventoryManager {\r\nprivate:\r\n    HashMap<Article> inventory; //!< Estructura para almacenar el inventario.\r\n    CSVManager csvManager;      //!< Utilidad para manejar operaciones relacionadas con CSV.\r\n    std::string fileName;       //!< Nombre del archivo CSV en el directorio /data.\r\n    list<Article> articlesTMP;\r\n    list<Article> lowStock;\r\n    list<Article> highStock;\r\n    size_t MINIMUM_STOCK = 5;\r\n    size_t MAX_STOCK = 20;\r\n\r\npublic:\r\n    /**\r\n     * @brief Constructor que inicializa el manejador con el nombre del archivo CSV.\r\n     * @param csvFileName Nombre del archivo CSV.\r\n     */\r\n    explicit InventoryManager(const std::string& csvFileName)\r\n        : fileName(csvFileName), csvManager(\"../data/\" + csvFileName) {}\r\n\r\n    /**\r\n     * @brief Carga el inventario desde el archivo CSV.\r\n     * \r\n     * Lee el archivo CSV especificado y carga los artículos en la estructura\r\n     * de inventario.\r\n     */\r\n    void loadInventory();\r\n\r\n    /**\r\n     * @brief Guarda el inventario en el archivo CSV.\r\n     * \r\n     * Escribe los cambios en el inventario actual en el archivo CSV especificado.\r\n     */\r\n    void saveInventory();\r\n\r\n    /**\r\n     * @brief Muestra el menú principal y maneja la selección del menú.\r\n     * \r\n     * Presenta las opciones del menú al usuario y ejecuta las acciones\r\n     * seleccionadas para la gestión del inventario.\r\n     */\r\n    void displayMainMenu();\r\n\r\n    size_t showTotalDifferentArticles();\r\n\r\n    size_t showTotalArticles();\r\n\r\n    void listArticlesAtMinimumStock();\r\n    void listArticlesAtMinimumStockByWarehouse();\r\n    void showIndividualArticleStock();\r\n    void listArticlesAboveThreshold();\r\n\r\n    // Métodos adicionales para las operaciones de inventario...\r\n    // Y así sucesivamente...\r\n};\r\n\r\n#endif // INVENTORY_MANAGER_H\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/include/InventoryManager.h b/include/InventoryManager.h
+--- a/include/InventoryManager.h	(revision 89efdb1c006dd1a68a7ccc467bfe9ec22a60bda2)
++++ b/include/InventoryManager.h	(date 1699515955341)
+@@ -65,6 +65,7 @@
+     void listArticlesAtMinimumStockByWarehouse();
+     void showIndividualArticleStock();
+     void listArticlesAboveThreshold();
++    void showIndividualArticleStockByWarehouse();
+ 
+     // Métodos adicionales para las operaciones de inventario...
+     // Y así sucesivamente...
+Index: src/main.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// main.cpp\r\n#include \"HashMap.h\"\r\n#include \"CSVManager.h\"\r\n#include \"InventoryManager.h\"\r\n#include <iostream>\r\n#include <Article.h>\r\n\r\n// Definir un objeto personalizado para almacenar en el hashmap\r\nstruct CustomObject {\r\n    /*\r\n    int attr1;\r\n    double attr2;\r\n    string attr3;\r\n    char attr4;\r\n\r\n    // Constructor\r\n    CustomObject(int a1, double a2, string a3, char a4) : attr1(a1), attr2(a2), attr3(std::move(a3)), attr4(a4) {}\r\n\r\n    // Un constructor simple para poder inicializar sin parámetros\r\n    CustomObject() : attr1(0), attr2(0.0), attr3(\"\"), attr4('\\0') {}\r\n\r\n    // Destructor\r\n    ~CustomObject() = default;\r\n     */\r\n};\r\n\r\n\r\n\r\nint main() {\r\n\r\n    InventoryManager inventory = InventoryManager(\"../data/Inventariado.csv\");\r\n    inventory.loadInventory();\r\n\r\n//    cout<< \"Hola Mundo\" << endl;\r\n\r\n//    cout << \"Cantidad total de articulos ditintos: \"<< inventory.showTotalDifferentArticles() << endl;\r\n\r\n//    cout << \"Cantidad total de articulos: \" << inventory.showTotalArticles() << endl;\r\n\r\n//    cout << \"Lista los artículos que están en el mínimo de stock.\"  << endl;\r\n//    inventory.listArticlesAtMinimumStock();\r\n\r\n//    cout << \"Lista los artículos que están en el mínimo de stock por depósito.\"  << endl;\r\n//    inventory.listArticlesAtMinimumStockByWarehouse();\r\n\r\n    cout << \"Muestra el stock individual de cada artículo.\"<< endl;\r\n    inventory.showIndividualArticleStock();\r\n\r\n//    cout << \"Lista los artículos que igualan o superan una cantidad determinada en stock.\"<< endl;\r\n//    inventory.listArticlesAboveThreshold();\r\n\r\n\r\n\r\n/*\r\n    string csvLine = \"AMOBLAMIENTO,AMLM-AM-U61-B,BANQUETA TAPIZADA COST BCO  BASE PINTADA NEGRO,,,1,,\";\r\n\r\n    CSVManager csvManager = CSVManager();\r\n    list<Article> articles = csvManager.mapToArticle(csvLine);\r\n\r\n\r\n\r\n    // Crear un hashmap para string keys y CustomObject values\r\n    HashMap<CustomObject> map;\r\n    HashMap<Article> map2;\r\n\r\n    Article article(\"ORANAFE-065120\",\"ANAFE VITROCERAMICO VITRO COOK 4\", 1, \"Deposito 4\");\r\n\r\n    map2.insert(\"ORANAFE-065120-4\",article);\r\n\r\n    // Obtener el valor usando la clave\r\n    Article* articleStored = map2.get(\"ORANAFE-065120-4\");\r\n    if (articleStored != nullptr) {\r\n        cout << \"Object found:\" << endl;\r\n        cout << \"Code: \" << articleStored->getCode() << endl;\r\n        cout << \"Name: \" << articleStored->getName() << endl;\r\n        cout << \"Quantity: \" << articleStored->getQuantity() << endl;\r\n        cout << \"Warehouse: \" << articleStored->getWarehouse() << endl;\r\n    } else {\r\n        cout << \"Object not found.\" << endl;\r\n    }\r\n\r\n    // Output the size of the map\r\n    cout << \"The size of the map is: \" << map.getSize() << endl;\r\n\r\n    return 0;*/\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main.cpp b/src/main.cpp
+--- a/src/main.cpp	(revision 89efdb1c006dd1a68a7ccc467bfe9ec22a60bda2)
++++ b/src/main.cpp	(date 1699519587114)
+@@ -28,26 +28,29 @@
+ 
+ int main() {
+ 
+-    InventoryManager inventory = InventoryManager("../data/Inventariado.csv");
++    InventoryManager inventory = InventoryManager("../data/Inventariado Fisico.csv");
+     inventory.loadInventory();
+ 
+ //    cout<< "Hola Mundo" << endl;
+ 
+-//    cout << "Cantidad total de articulos ditintos: "<< inventory.showTotalDifferentArticles() << endl;
++//    cout << "Cantidad total de articulos ditintos: "<< inventory.showTotalDifferentArticles() << endl;✅
+ 
+-//    cout << "Cantidad total de articulos: " << inventory.showTotalArticles() << endl;
++//    cout << "Cantidad total de articulos: " << inventory.showTotalArticles() << endl;                 ✅
+ 
+-//    cout << "Lista los artículos que están en el mínimo de stock."  << endl;
++//    cout << "Lista los artículos que están en el mínimo de stock."  << endl;                          ✅
+ //    inventory.listArticlesAtMinimumStock();
+ 
+-//    cout << "Lista los artículos que están en el mínimo de stock por depósito."  << endl;
+-//    inventory.listArticlesAtMinimumStockByWarehouse();
++    cout << "Lista los artículos que están en el mínimo de stock por depósito."  << endl;
++    inventory.listArticlesAtMinimumStockByWarehouse();
+ 
+-    cout << "Muestra el stock individual de cada artículo."<< endl;
+-    inventory.showIndividualArticleStock();
++//    cout << "Muestra el stock individual de cada artículo por depósito."  << endl;                    ✅
++//    inventory.showIndividualArticleStockByWarehouse();
+ 
+-//    cout << "Lista los artículos que igualan o superan una cantidad determinada en stock."<< endl;
+-//    inventory.listArticlesAboveThreshold();
++//    cout << "Muestra el stock individual de cada artículo."<< endl;                                   ✅
++//    inventory.showIndividualArticleStock();
++
++    cout << "Lista los artículos que igualan o superan una cantidad determinada en stock."<< endl;      ✅
++    inventory.listArticlesAboveThreshold();
+ 
+ 
+ 
+Index: include/Menu.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/include/Menu.h b/include/Menu.h
+new file mode 100644
+--- /dev/null	(date 1699515437546)
++++ b/include/Menu.h	(date 1699515437546)
+@@ -0,0 +1,73 @@
++
++/**
++ * @file menu.h
++ * @brief Archivo que contiene la interfaz del menú para la aplicación de gestión de inventario.
++ *
++ * Este archivo de cabecera contiene las declaraciones de las funciones utilizadas para mostrar
++ * el menú de la aplicación de gestión de inventario y manejar la selección del usuario.
++ */
++
++#ifndef MENU_H
++#define MENU_H
++
++#include <stdio.h>
++#include <unordered_map>
++#include <functional>
++#include <iostream>
++
++/**
++ * @brief Muestra el menú principal.
++ *
++ * Esta función imprime el menú principal de la aplicación en la consola.
++ * Lista todos los comandos disponibles y sus descripciones.
++ */
++void displayMainMenu();
++
++/**
++ * @brief Maneja la selección del menú del usuario.
++ *
++ * Esta función toma la entrada del usuario y llama a la función apropiada
++ * basándose en la selección.
++ *
++ * @param selection La selección del menú del usuario.
++ */
++void handleMenuSelection(int selection);
++
++/**
++ * @brief Muestra la cantidad total de artículos diferentes.
++ */
++void showTotalDifferentArticles();
++
++/**
++ * @brief Muestra la cantidad total de artículos.
++ */
++void showTotalArticles();
++
++/**
++ * @brief Lista los artículos que están en el mínimo de stock.
++ */
++void listArticlesAtMinimumStock();
++
++/**
++ * @brief Lista los artículos que están en el mínimo de stock por depósito.
++ */
++void listArticlesAtMinimumStockByWarehouse();
++
++/**
++ * @brief Muestra el stock individual de cada artículo.
++ */
++void showIndividualArticleStock();
++
++/**
++ * @brief Muestra el stock individual de cada artículo por depósito.
++ */
++void showIndividualArticleStockByWarehouse();
++
++/**
++ * @brief Lista los artículos que igualan o superan una cantidad determinada en stock.
++ *
++ * @param threshold La cantidad de stock que se debe igualar o superar para listar el artículo.
++ */
++void listArticlesAboveThreshold(int threshold);
++
++#endif // MENU_H
+Index: data/Inventariado.csv
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/Inventariado.csv b/data/Inventariado.csv
+new file mode 100644
+--- /dev/null	(date 1699514888427)
++++ b/data/Inventariado.csv	(date 1699514888427)
+@@ -0,0 +1,16 @@
++Grupo,Código de barras,Artículo,deposito 1,deposito 2,deposito 3,deposito 4,deposito 5
++AMOBLAMIENTO,AMLM-AM-U61-B,BANQUETA TAPIZADA COST BCO  BASE PINTADA NEGRO,,,1,,
++,AMLM-MD-B53-B,BANQUETA LAQUEADA BASE PINTADA AS/RS BLANCA,,,2,,
++,AMLM-VT J02 A,R- SILLA 4 PATAS DE MADERA TOR TAPIZ SHOT NICKEL,,,6,,
++ANAFES ORMAY,ORANAFE-065120,ANAFE VITROCERAMICO VITRO COOK 4,,,,1,
++,ORANAFE-INDUCC-I2,ANAFE INDUCCION SMART COOK I2,,1,,,
++,ORANAFE-INDUCC-I4,ANAFE INDUCCION SMART COOK I4,,,,2,
++,ORANAFE-TECNO-IX,ANAFE TECNO IX - A. INOX,,1,,2,
++CAMPANAS FRANKE,CF-TURBOTRO-3716,PURIF TURBOTRONIC 60 CM 1 MOT DESLIZ - BLANCO,1,,1,88,
++CAMPANAS TST,CTC-300-75,CAMP COLHUE 75 CM,,,,1,
++,CTE-740,FILTRO CARBON ACTIVADO (CONJUNTO CARTUCHOS),1,,51,,1
++,CTESP-280-60,CAMP ESPEJO NEGRO-60-3V-CR-CM,1,,,,
++,CTIKUBA-245-90,CAMP KUBA ISLA-90-3V-A-CM (90X50),,,1,1,
++,CTLACAR-260-75,CAMP LACAR CRISTAL CURVO -75-3V-CR-CM,1,44,,,
++,CTLACAR-260-90,CAMP LACAR CRISTAL CURVO-90-3V-CR-CM,,,,1,
++,CTLANIN-330-75,CAMP LANIN 3V-A-CM 75 CM,2,,,,
+Index: data/InventariadoShort.csv
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/InventariadoShort.csv b/data/InventariadoShort.csv
+new file mode 100644
+--- /dev/null	(date 1699502378423)
++++ b/data/InventariadoShort.csv	(date 1699502378423)
+@@ -0,0 +1,153 @@
++Grupo,C�digo de barras,Art�culo,deposito 1,deposito 2,deposito 3,deposito 4,deposito 5
++,GVC-AGAT-B&D,GRIFERIA VASSER AGATHA BLANCA Y DORADO 25/2302.BG,2,,1,,
++,GVC-AGAT-BLANCA,GRIFERIA VASSER AGATHA BLANCA 25/2302.BO,,,2,1,
++,GVC-AGAT-NE,GRIFERIA VASSER AGATHA NEGRA 25/2302.01,3,1,1,1,
++,GVC-AGT-ND,GRIFERIA VASSER AGATHA NEGRA Y DORADO 25/2302,4,,2,,
++,GVC-AJAX,GRIFERIA VASSER AJAX 18/2302,4,,2,1,
++,GVC-ALIZEPARED2,GRIFERIA VASSER ALIZE EXT  PARED 2 LLAVES 24/2310,7,,1,,
++,GVC-ANTILA,GRIFERIA VASSER ANTILA 23/2302,6,4,1,1,
++,GVC-ARGUS,GRIFERIA VASSER ARGUS 14/2302,,,1,,
++,GVC-HERA,GRIFERIA VASSER HERA 19/2302,10,,1,1,
++,GVC-LYRABD,GRIFERIA VASSER LYRA BASE DUO 10/2302.01,6,,,1,
++,GVC-ODESSA,GRIFERIA VASSER ODESSA 16/2302,7,1,,1,
++,GVC-RHODA/ TROYA,GRIFERIA VASSER RHODA/TROYA  15/2302,19,3,1,,
++,GVC-TITANIA,GRIFERIA VASSER TITANIA 17/2302,6,,,1,
++,GVC-VEGALEVER,GRIFERIA VASSER VEGA LEVER 20/2301 L,10,,2,,
++,GVC-ZAFIRO-CROMO,GRIFERIA VASSER ZAFIRO MONO CROMO 12/2302,,,1,,
++,GVC-ZAFIRO-NEGRO,GRIFERIA VASSER ZAFIRO MONO NEGRO 12/2302NG,1,,1,,
++HORNOS ORMAY,ORHOR-HE60-A2,HORNO H.E.60 A2,,1,1,,
++,ORHOR-HE60-A3,HORNO H.E.60 A3,,,1,1,
++,ORHOR-HE60-A4,HORNO H.E.60 A4,,,1,1,
++MUEBLES ACCESORIOS,MACC-ESCURRE-560,ESCURREPLATOS ALACENA 560,,,1,,
++,MACC-ESCURRE-760,ESCURREPLATOS ALACENA 760,,,1,,
++,MACC-ESCURRE-860,ESCURREPLATOS ALACENA 860,,,1,,
++,MACC-PISOAL-120,PISO DE ALUMINIO DE 120 CM,2,,,,
++,MACC-PORTARES- ACERO-15L-10714-MOD400,PORTA RESIDUO ACERO INOX 15LTS INOX DIF,1,,,1,
++,MACC-PORTARES- FARK-3017-10lt,PORTA RESIDUO ACERO INOX 10LTS FARK-3017,1,,1,,
++,MACC-PORTARES-DOBLE,PORTA RESIDUO DOBLE CUADRADO,,,1,,
++,MACCH-PRES-13l-5325-502.01.923,PORTARESIDUOS INOX HAFELE DE13 LTS,1,,1,,
++,MACCH-PRES-15,PORTARESIDUOS INOX HAFELE DE15 LTS,,,,3,
++PILETAS CERAMICAS CERART,PCCALBI-AZUL,PILETA C. CERART ALBI AZUL APOYAR,,,1,,
++,PCCALBI-B-A,PILETA C. CERART ALBI BCA APOYAR,5,,1,,
++,PCCALBI-ROJO,PILETA C. CERART ALBI ROJO APOYAR,,,1,,
++,PCCARG-BCA,PILETA C. CERART ARGENTA BCA,1,,1,,
++,PCCARG-NEG,PILETA C. CERART ARGENTA NEGRA,,,1,,
++,PCCCOLSM,PILETA C. COLUMBIA SOBRE MESADA,1,,,,1
++,PCCCOLUMBMES,PILETA C. COLUMBIA BAJO MESADA,1,,,,
++,PCCKOBE-BCA-A,PILETA C. CERART KOBE BCA APOYAR,2,,1,,
++,PCCKOBE-ROJO-A,PILETA C. CERART KOBE ROJO APOYAR,,,1,,
++,PCCMICHEL-BCO,PILETA C. CERART MICHEL  BCA EMBUTIR,2,,1,,
++,PCCPARIS-GDE-BCA -E,PILETA C. CERART PARIS GRANDE  BCA  EMBUTIR,,,1,,
++,PCCPARIS-GDE-PPA,PILETA C. CERART PARIS GRANDE  BCA  P/ABAJO,3,,,,
++,PCCPROV-GDE-BCA-E,PILETA C. CERART PROVENZAL GRANDE  BCA  EMBUTIR,2,,,,
++,PCCPROVCH-BCA-A,PILETA C. CERART PROVENZAL CHICA BCA  APOYAR,,,1,,
++,PCCREMIS-CH-LISA-BCA-PPA,PILETA C. CERART REIMS CHICA BCA P P/ ABAJO,,,1,,
++,PCCRODEZ-BCA-A,PILETA C. CERART RODEZ BCA APOYAR,3,,,,
++,PCCTANA-CMAND-A,PILETA C. CERART TANABE COLOR MANDARINA  APOYAR,,,1,,
++,PCCTANA-CROJO-A,PILETA C. CERART TANABE COLOR ROJO  APOYAR,,,1,,
++PILETAS DACCORD,AD-AGAROIMP 14,AGARRADERAS CURVAS ACERO INOX 135� 45 CM,,,1,,
++,DD-REPOIMP 20,DESAG�E QUICK CLACK S/ DESB � 1.1/4` -BIDET/LAVA,17,,1,,
++,ED-ESPEJO-6060,ESPEJO BISELADO 60 X 60,3,,1,,
++,ED-ESPEJO-7070,ESPEJO BISELADO 70 X 70,8,,1,,
++,ED-ESPEJO-8080,ESPEJO BISELADO 80 X 80,,,,1,
++,PD-BACHOIMP 18,LAVATORIO ARANJUEZ 3AG 60 X46 X 17.5,3,,1,,
++,PD-BACHOIMP 19,LAVATORIO ARANJUEZ 1 AG 51 X47 X 17,,,,1,
++,PD-BACHOIMP 24,BACHA CUENCA CRISTAL,4,,1,,
++,PD-BACHOLOZ 03,BACHA LOZA  DE APOYO ALUMINE BCA,4,,1,,
++,PD-BACHOLOZ 04,BACHA LOZA DE APOYO NAHUEL BCA,,2,1,,
++,PD-BACHOLOZ 04 02,BACHA LOZA DE APOYO NAHUEL NEGRA,2,,1,,
++,PD-BACHOLOZ 04 25,BACHA LOZA NAHUEL ART SPONGE GRIS,,,1,,
++,PD-BACHOLOZ 05,BACHA LOZA DE APOYO PUELO BLANCA,1,,1,,
++,PD-BACHOLOZ 07,LAVATORIO SOBRE MESADA BLANCO,1,,,,
++,PD-BACHOLOZ 08,BACHA LOZA DE APOYO AGUS BCA,3,,1,,
++,PD-BACHOLOZ 08 02,BACHA LOZA DE APOYO AGUS NEGRA,2,,1,,
++,PD-BACHOLOZ 08 03,BACHA LOZA DE APOYO  AGUS ROJA,2,,1,,
++,PD-BACHOLOZ 08 21,BACHA LOZA AGUS ART MARMOLADA NEGRA,,,1,,
++,PD-BACHOLOZ 09,BACHA LOZA DE APOYO SOFY BLANCA,3,,,,
++,PD-BACHOLOZ 09 23,BACHA LOZA SOFY ART MARMOLADA MARRON,1,,1,,
++,PD-BACHOLOZ 09 26,BACHA LOZA SOFY ART CEBRA BLANCA,2,,1,,
++,PD-BACHOLOZ 09 28,BACHA LOZA SOFY ART CEBRA MARRON,,,1,,
++,PD-BACHOLOZ 10,BACHA LOZA DE APOYO PILI BLANCA,2,,2,,
++,PD-BACHOLOZ 18,BACHA LOZA DE APOYO LUNA BCA,2,,1,,
++,PD-BACHOLOZ 19,BACHA LOZA FRANC BLANCA,3,,1,,
++,PD-BVSE-NE41,BACHA VIDRIO SEVILLA NEGRA 41 CM,1,,1,,
++,PD-BVSE-NEG31,BACHA VIDRIO SEVILLA NEGRA 31 CM,5,,1,,1
++,PD-BVSE-ROJ31,BACHA VIDRIO SEVILLA ROJA 31.5 CM,2,,1,,
++,PD-BVSE-ROJ41,BACHA VIDRIO SEVILLA ROJA 41.5 CM,3,,1,,
++,PD-BVSEVILLA31,BACHA VIDRIO SEVILLA 31,2,,1,,
++,PD-BVSEVILLA41,BACHA VIDRIO SEVILLA 41,3,,2,,
++,PD/BACHOLOZ 09 25,BACHA LOZA SOFY ART SPONGE GRIS,2,,1,,
++,RD-REJOIMP 120,REJILLA 12*12  QUICK CLACK,7,,1,,
++,RD-REJOIMP 150,REJILLA 15*15  QUICK CLACK,8,,1,,
++PILETAS FERRUM,PF-ARM-BH-132-B-BCA,PILETA FERRUM ARMONICA CADRIA BLANCO SIN REBALSE,1,,,1,
++,PF-ARM-BH-163-B,PILETA FERRUM BAJO MESADA ESQUEL CUADRA,1,,1,,
++,PFA-CUADRA-BCA,PILETA FERRUM ARMONICA CUADRA BLANCO,,,1,,
++,PFAB-ARM-BH-100-BL,PILETA FERRUM ARIANNA BLANCA,4,,1,,
++,PFCITBCA,PILETA FERRUM CITERA BLANCA,,,1,,
++,PFCONGGB,PILETA FERRUM CONGRESO GRANDE BLANCO,1,,,,
++,PFL11SF,PILETA FERRUM BACHA CIRCULAR SOBRE MESADA,,,1,,
++,PFLEB,PILETA FERRUM LEB BLANCO,2,,1,,
++,PFLES,PILETA FERRUM LES BLANCO,,,2,,
++,PFP-NAR,PILETA FERRUM PERSIS NARANJA,,,1,,
++PILETAS JOHNSON,PJA-APIACLU,PILETA ACCESORIA LUXOR ABS,1,,1,1,
++,PJA-APIACQ71,PILETA ACCESORIA ABS QUADRA MAX Q71,,1,,1,
++,PJA-APICUCE,CUBRE CESTILLO JOHNSON,10,,3,3,
++,PJA-APIDO,DOSIFICADOR,2,3,1,1,
++,PJA-APIDOCU,DOSIFICADOR CUBO,1,,2,4,
++,PJA-CASELU,CANASTO SECAPLATO LUXOR DE ACERO,2,,2,1,
++,PJA-SOCEC,SOPAPA CESTILLO CUADRADA,2,,,,
++,PJAE-ESAC Q40,ESCURREPLATO Q 40,,,,1,
++,PJAE-ESACCV,ESCURREPLATO CURVE,,,,1,
++,PJAE-ESACE3,ESCURRIDOR DE PLATOS P/ E3,,1,,,
++,PJAE-ESACE4,ESCURRIDOR DE PLATOS P/ E4,,,1,,
++,PJAE-ESACQ71,ESCURREPLATO Q 71,,1,,1,
++,PJAT-TACVCS,TABLA DE PICAR CURVE COMPACTO ESTRUC,1,,,,
++,PJAT-TACVVT,TABLA DE PICAR CURVE VIDRIO TEMPLADO,,,,1,
++,PJAT-TALC,TABLA LUXOR COMPACT DE MADERA,,,1,,
++,PJAT-TAMOQ71,TABLA DE PICAR MONTELLI QUADRA MAX Q71,,1,,,
++,PJAT-TAQ40,TABLA DE PICAR  DE MADERA Q40,,,1,,
++,PJAXA D78A,PILETA ACERO INOX AXA D78 A,,1,,,
++,PJC28,PILETA ACERO INOX C28,1,1,,,
++,PJC28/18,PILETA ACERO INOX C28/18,2,,1,,
++,PJC37/18,PILETA ACERO INOX C37/18,1,1,,,
++,PJCC28,PILETA ACERO INOX CC28,1,,,,
++,PJCC28/18,PILETA ACERO INOX CC28/18,,1,,,
++,PJCURVE-SI77A,PILETA ACERO 304 CURVE SI 77A,,1,,1,
++,PJE28,PILETA ACERO INOX E28,1,,,,
++,PJE60,PILETA ACERO INOX E60,,2,,,
++,PJEE28,PILETA ACERO INOX EE28,1,,,,
++,PJF37,PILETA ACERO INOX F37,1,,,,
++,PJG50,PILETA ACERO INOX G50,1,,,,
++,PJHYDRA J107A,PILETA ACERO INOX HYDRA J107A,1,,1,,
++,PJLUXSI71AD,PILETA ACERO INOX LUXOR SI 71 AD,1,,1,1,
++,PJLUXSI85ADD,PILETA ACERO INOX LUXOR SI 85 ADD,,1,1,1,
++,PJO-340L,PILETA ACERO INOX O 340 L,4,,,,
++,PJO37AT,PILETA ACERO INOX O37 AT,1,,,,
++,PJQ084 A,PILETA ACERO INOX Q084 A,1,,,,
++,PJQ084 AD/D,PILETA ACERO INOX Q084 AD/D,,,,1,
++,PJQ085A,PILETA ACERO INOX Q085 A,1,,,,
++,PJQ085ADD,PILETA ACERO INOX Q085 ADD,,,,1,
++,PJQ37,PILETA ACERO INOX  Q 37,1,,,,
++,PJQ40,PILETA ACERO INOX Q 40,1,,,,
++,PJQMQ71A,QUADRA MAX Q 71 A,1,1,,1,
++,PJR63/18,PILETA ACERO INOX R63/18,,1,,,
++,PJSOAM,SOPAPA AMERICANA,30,,2,,
++,PJSOCESU,SOPAPA CESTILLO,89,,1,,
++,PJSOCESUCR,SOPAPA CESTILLO ANTIRREBALSE,1,,,,1
++,PJSOCO,SOPAPA COM�N,26,,1,,
++,PJX28,PILETA ACERO INOX ESQUIN X28,,,,,1
++,PJZ52,PILETA ACERO INOX Z52,6,,,,
++,PJZ52/18,PILETA ACERO INOX Z52/18,2,1,,,
++,PJZARA D84 A,PILETA ACERO INOX ZARA D84 A,1,,,,
++,PJZZ52,PILETA ACERO INOX ZZ52,1,,1,,1
++,PJZZ52/18,PILETA ACERO INOX ZZ52/18,1,,,,
++,PMP-SOCO,SOPAPA COM�N MI PILETA,20,,,,
++PILETAS MI PILETA,PMP-104P,PILETA MI PILETA DOBLE 57 X37X 18 CM,,15,,,
++,PMP-455,PILETA MI PILETA OVAL  38 X 28 X 13 CM,1,,,,
++,PMP-458,PILETA MI PILETA OVAL RI�ON 37 X26 X 13 CM,1,,,,
++PILETAS PRINGLES,PPVALBM,PILETA PRINGLES VALENTINA BAJO MESADA,1,,,,
++PILETAS VIDRIO COLORI,PVCC-NARAN,PILETA DE VIDRIO CUADRADA NARANJA,,,1,,
++,PVCC-TRANS,PILETA DE VIDRIO CUADRADA TRANSPARENTE,,,1,,
++TERMOTANQUES ORMAY,ORCAMP-VITROC605,CAMPANA VITRO C 605,,,1,,
++TURBOAR,TURBOAR_M288C_SEC.PELO.PARED,SECADOR DE PELO PARED TURBOAR MODELO M288C,1,,,,
++,TURBOAR_M798C_SEC.MANO.PARED,SECADOR DE MANO PARED TURBOAR MODELO M-798C,1,,,,

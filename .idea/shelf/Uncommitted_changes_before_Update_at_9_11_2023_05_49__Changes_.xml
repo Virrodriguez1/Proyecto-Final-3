@@ -1,0 +1,19 @@
+<changelist name="Uncommitted_changes_before_Update_at_9_11_2023_05_49_[Changes]" date="1699519843440" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_11_2023_05_49_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 9/11/2023 05:49 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="bin/Inventario.exe" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_11_2023_05_49_[Changes]/Inventario.exe" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="data/Inventariado Fisico.csv" />
+    <option name="AFTER_PATH" value="data/Inventariado Fisico.csv" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_11_2023_05_49_[Changes]/Inventariado Fisico.csv" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="data/Inventariado_Fisico.xlsx" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_11_2023_05_49_[Changes]/Inventariado_Fisico.xlsx" />
+  </binary>
+</changelist>
