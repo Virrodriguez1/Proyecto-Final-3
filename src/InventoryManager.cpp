@@ -76,6 +76,9 @@ void InventoryManager::listArticlesAtMinimumStockByWarehouse() {
 }
 
 void InventoryManager::showIndividualArticleStock() {
+    for(auto &article:articlesTMP){
+        cout<< article.toStringOnlyStock();
+    }
 
 }
 
@@ -83,5 +86,4 @@ void InventoryManager::listArticlesAboveThreshold() {
     for(auto & article:highStock){
         cout << article.toString();
     }
-
 }

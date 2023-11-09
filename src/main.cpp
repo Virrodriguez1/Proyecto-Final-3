@@ -43,11 +43,11 @@ int main() {
 //    cout << "Lista los artículos que están en el mínimo de stock por depósito."  << endl;
 //    inventory.listArticlesAtMinimumStockByWarehouse();
 
-//    cout << "Muestra el stock individual de cada artículo."<< endl;
-//    inventory.showIndividualArticleStock();
+    cout << "Muestra el stock individual de cada artículo."<< endl;
+    inventory.showIndividualArticleStock();
 
-    cout << "Lista los artículos que igualan o superan una cantidad determinada en stock."<< endl;
-    inventory.listArticlesAboveThreshold();
+//    cout << "Lista los artículos que igualan o superan una cantidad determinada en stock."<< endl;
+//    inventory.listArticlesAboveThreshold();
 
 
 

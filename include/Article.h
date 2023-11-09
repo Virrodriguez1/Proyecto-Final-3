@@ -87,7 +87,14 @@ public:
         os << "----------------------------------------"<<endl;
         os << "Article Details:" << endl;
         os << "Category: " << getCategory() << endl;
-        os << "Code: " << getCode() << endl;
+        toStringOnlyStock();
+
+        return os.str();
+    }
+
+    string toStringOnlyStock() const{
+        ostringstream os;
+
         os << "Name: " << getName() << endl;
 
         // Convertir la lista de almacenes en un string, separado por comas.
