@@ -22,7 +22,9 @@ private:
     std::string fileName;       //!< Nombre del archivo CSV en el directorio /data.
     list<Article> articlesTMP;
     list<Article> lowStock;
+    list<Article> highStock;
     size_t MINIMUM_STOCK = 5;
+    size_t MAX_STOCK = 20;
 
 public:
     /**
@@ -60,6 +62,9 @@ public:
     size_t showTotalArticles();
 
     void listArticlesAtMinimumStock();
+    void listArticlesAtMinimumStockByWarehouse();
+    void showIndividualArticleStock();
+    void listArticlesAboveThreshold();
 
     // Métodos adicionales para las operaciones de inventario...
     // Y así sucesivamente...

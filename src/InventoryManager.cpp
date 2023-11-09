@@ -16,6 +16,10 @@ void InventoryManager::loadInventory() {
 
             if(article.getTotalStock() <= MINIMUM_STOCK){
                 lowStock.push_back(article);
+            } else{
+                if(article.getTotalStock()>= MAX_STOCK){
+                    highStock.push_back(article);
+                }
             }
             inventory.insert(article.getCode(), article);
 //            cout<< "La key es: "<< article.getCode() + "-" + article.getWarehouse() << endl;
@@ -65,4 +69,19 @@ void InventoryManager::listArticlesAtMinimumStock() {
     for(auto &article:lowStock){
         cout<< article.toString();
     }
+}
+
+void InventoryManager::listArticlesAtMinimumStockByWarehouse() {
+
+}
+
+void InventoryManager::showIndividualArticleStock() {
+
+}
+
+void InventoryManager::listArticlesAboveThreshold() {
+    for(auto & article:highStock){
+        cout << article.toString();
+    }
+
 }
